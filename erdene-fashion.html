@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Эрдэнэ — Монгол Хувцасны Брэнд</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #C9A96E;
+      --dark: #1a1a1a;
+      --cream: #FAF7F2;
+      --text: #2c2c2c;
+      --muted: #888;
+      --border: rgba(201,169,110,0.3);
+    }
+    body { font-family: 'Georgia', serif; color: var(--text); background: var(--cream); }
+
+    /* NAV */
+    nav {
+      background: #1a1a1a;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 56px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { color: var(--gold); font-size: 18px; letter-spacing: 3px; text-transform: uppercase; font-weight: normal; }
+    .nav-links { display: flex; }
+    .nav-btn {
+      background: none; border: none; color: #aaa;
+      padding: 0 16px; height: 56px; cursor: pointer;
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: 'Georgia', serif; transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-btn:hover { color: #fff; }
+    .nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    .page { display: none; }
+    .page.visible { display: block; }
+
+    /* HOME */
+    .hero {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2418 50%, #1a1a1a 100%);
+      padding: 5rem 2rem 4rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,169,110,0.03) 40px, rgba(201,169,110,0.03) 80px);
+    }
+    .hero-tag { color: var(--gold); font-size: 11px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+    .hero h1 { color: #fff; font-size: 42px; font-weight: normal; line-height: 1.2; margin-bottom: 1rem; letter-spacing: 1px; position: relative; }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+    .hero p { color: #aaa; font-size: 15px; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.8; position: relative; }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn-primary {
+      background: var(--gold); color: #1a1a1a; border: none;
+      padding: 12px 32px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      cursor: pointer; font-family: 'Georgia', serif; transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline {
+      background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3);
+      padding: 12px 32px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      cursor: pointer; font-family: 'Georgia', serif; transition: border-color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .features { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+    .feature-card { background: var(--cream); padding: 2rem 1.5rem; text-align: center; }
+    .feature-icon { font-size: 28px; margin-bottom: 1rem; }
+    .feature-card h3 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #1a1a1a; font-weight: normal; margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    .collection-strip { padding: 3rem 2rem; }
+    .section-title { text-align: center; margin-bottom: 2.5rem; }
+    .section-title span { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+    .section-title h2 { font-size: 26px; font-weight: normal; color: #1a1a1a; }
+    .product-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .product-card { cursor: pointer; }
+    .product-img {
+      aspect-ratio: 3/4; background: #e8e2d9;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; margin-bottom: 12px; position: relative;
+    }
+    .product-badge {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--gold); color: #1a1a1a;
+      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px;
+    }
+    .product-name { font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: #1a1a1a; margin-bottom: 4px; }
+    .product-price { font-size: 14px; color: var(--gold); }
+
+    /* INFO */
+    .info-hero { background: #1a1a1a; padding: 4rem 2rem 3rem; text-align: center; }
+    .info-hero h1 { color: #fff; font-size: 32px; font-weight: normal; letter-spacing: 2px; margin-bottom: 1rem; }
+    .info-hero p { color: #aaa; font-size: 14px; max-width: 500px; margin: 0 auto; line-height: 1.8; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+    .stat { background: #1a1a1a; padding: 2rem; text-align: center; }
+    .stat-num { font-size: 36px; color: var(--gold); font-weight: normal; display: block; margin-bottom: 0.25rem; }
+    .stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #aaa; }
+
+    .info-content { padding: 3rem 2rem; }
+    .info-section { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem; align-items: center; }
+    .info-section.reverse { direction: rtl; }
+    .info-section.reverse > * { direction: ltr; }
+    .info-img { aspect-ratio: 4/3; background: #e8e2d9; display: flex; align-items: center; justify-content: center; font-size: 64px; }
+    .info-text h3 { font-size: 20px; font-weight: normal; color: #1a1a1a; margin-bottom: 1rem; letter-spacing: 1px; }
+    .info-text p { font-size: 14px; color: #555; line-height: 1.9; margin-bottom: 1rem; }
+    .info-list { list-style: none; padding: 0; }
+    .info-list li { padding: 8px 0; font-size: 13px; color: #555; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 8px; }
+    .info-list li::before { content: '—'; color: var(--gold); }
+
+    /* CONTACT */
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
+    .contact-info-panel { background: #1a1a1a; padding: 3rem 2rem; }
+    .contact-info-panel h2 { color: #fff; font-size: 26px; font-weight: normal; letter-spacing: 2px; margin-bottom: 1rem; }
+    .contact-info-panel p { color: #aaa; font-size: 13px; line-height: 1.8; margin-bottom: 2rem; }
+    .contact-detail { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 1.5rem; }
+    .contact-icon { color: var(--gold); font-size: 18px; margin-top: 2px; }
+    .contact-detail-text { font-size: 13px; color: #bbb; line-height: 1.7; }
+    .contact-detail-label { color: var(--gold); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+
+    .contact-form-panel { background: var(--cream); padding: 3rem 2rem; }
+    .contact-form-panel h2 { font-size: 22px; font-weight: normal; color: #1a1a1a; letter-spacing: 1px; margin-bottom: 2rem; }
+    .form-row { margin-bottom: 1.25rem; }
+    .form-row label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #888; margin-bottom: 6px; }
+    .form-row input, .form-row textarea, .form-row select {
+      width: 100%; background: #fff; border: 0.5px solid #ddd;
+      padding: 10px 12px; font-size: 13px; font-family: 'Georgia', serif;
+      color: #333; outline: none; transition: border-color 0.2s;
+    }
+    .form-row input:focus, .form-row textarea:focus, .form-row select:focus { border-color: var(--gold); }
+    .form-row textarea { resize: vertical; min-height: 100px; }
+    .success-msg { background: #f0f7f0; border: 0.5px solid #7ab87a; color: #2d6e2d; padding: 12px 16px; font-size: 13px; display: none; margin-top: 12px; }
+
+    .footer { background: #0f0f0f; padding: 2rem; text-align: center; }
+    .footer p { color: #555; font-size: 11px; letter-spacing: 1px; }
+    .footer-gold { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      .features, .product-grid, .stats-row { grid-template-columns: 1fr; }
+      .info-section, .info-section.reverse, .contact-wrap { grid-template-columns: 1fr; direction: ltr; }
+      .hero h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Эрдэнэ</div>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="showPage('home', this)">Нүүр</button>
+      <button class="nav-btn" onclick="showPage('info', this)">Мэдээлэл</button>
+      <button class="nav-btn" onclick="showPage('contact', this)">Холбоо барих</button>
+    </div>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <div id="page-home" class="page visible">
+    <div class="hero">
+      <span class="hero-tag">Монгол Зохиомж · 2024</span>
+      <h1>Хувцас бол <em>урлаг</em>,<br>таны дүрслэл</h1>
+      <p>Монголын уламжлал болон орчин үеийн загварыг хослуулсан, өндөр чанартай хувцасны цуглуулга.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('info', document.querySelectorAll('.nav-btn')[1])">Цуглуулга үзэх</button>
+        <button class="btn-outline" onclick="showPage('contact', document.querySelectorAll('.nav-btn')[2])">Холбоо барих</button>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🧵</div>
+        <h3>Өндөр чанар</h3>
+        <p>Монгол нооснос бүтээсэн онцгой даавуу, гар оёдол.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3>Орчин загвар</h3>
+        <p>Уламжлалт хээ, угалзыг орчин үеийн хэлбэрт шингээсэн.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Хүргэлт</h3>
+        <p>Улаанбаатар болон орон нутагт хурдан найдвартай хүргэлт.</p>
+      </div>
+    </div>
+
+    <div class="collection-strip">
+      <div class="section-title">
+        <span>Шинэ цуглуулга</span>
+        <h2>Намрын Онцлох Загварууд</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card" onclick="showPage('info', document.querySelectorAll('.nav-btn')[1])">
+          <div class="product-img">🥻<span class="product-badge">Шинэ</span></div>
+          <div class="product-name">Дээл — Нэхмэл</div>
+          <div class="product-price">₮ 185,000</div>
+        </div>
+        <div class="product-card" onclick="showPage('info', document.querySelectorAll('.nav-btn')[1])">
+          <div class="product-img">👘<span class="product-badge">Онцлох</span></div>
+          <div class="product-name">Торгон Дээл</div>
+          <div class="product-price">₮ 290,000</div>
+        </div>
+        <div class="product-card" onclick="showPage('info', document.querySelectorAll('.nav-btn')[1])">
+          <div class="product-img">🧥</div>
+          <div class="product-name">Ноосон Пальто</div>
+          <div class="product-price">₮ 240,000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFO PAGE -->
+  <div id="page-info" class="page">
+    <div class="info-hero">
+      <h1>Бидний Тухай</h1>
+      <p>Монголын уламжлалт хувцасны соёлыг хамгаалж, орчин үед тохируулан хөгжүүлэхийг зорьж байна.</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat"><span class="stat-num">12+</span><span class="stat-label">Жилийн туршлага</span></div>
+      <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Загварын цуглуулга</span></div>
+      <div class="stat"><span class="stat-num">8,000+</span><span class="stat-label">Баяртай үйлчлүүлэгч</span></div>
+    </div>
+
+    <div class="info-content">
+      <div class="info-section">
+        <div class="info-img">🥻</div>
+        <div class="info-text">
+          <h3>Монгол Дээл — Уламжлал ба Орчин Үе</h3>
+          <p>Монгол дээл нь мянган жилийн түүхтэй, манай үндэстний соёлын гол тэмдэглэгч хувцас юм. Бид уламжлалт оёдлын аргыг хадгалан, орчин үеийн дизайны элементүүдийг нэмж тансаг загвар бүтээдэг.</p>
+          <ul class="info-list">
+            <li>Монгол ноос, торго, бөс даавуу</li>
+            <li>Уламжлалт хээ угалз</li>
+            <li>Гар оёдлын онцгой чанар</li>
+            <li>Дулаан болон зуны хувилбарууд</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-section reverse">
+        <div class="info-img">👗</div>
+        <div class="info-text">
+          <h3>Орчин Үеийн Монгол Загвар</h3>
+          <p>Орчин үеийн амьдралд тохирсон Монгол хэв маягийн хувцас бүтээх нь бидний зорилго. Оффис, найрсал цуглаан, ёслолын арга хэмжээнд зохих, гоёмсог хувцаснуудыг санал болгодог.</p>
+          <ul class="info-list">
+            <li>Бизнесийн хувцас</li>
+            <li>Ёслолын хувцас</li>
+            <li>Өдөр тутмын загвар</li>
+            <li>Хувийн захиалгаар оёлт</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <div class="info-img">🧶</div>
+        <div class="info-text">
+          <h3>Материал ба Чанар</h3>
+          <p>Бид зөвхөн дотоодын үйлдвэрлэлийн өндөр чанартай материал ашигладаг. Монголын нэхий, ноос, цамхагийн торго зэрэг уламжлалт материалуудыг хослуулан ашигладаг.</p>
+          <ul class="info-list">
+            <li>100% Монгол нооснос</li>
+            <li>Байгалийн будаг</li>
+            <li>Экологийн цэвэр материал</li>
+            <li>Удаан эдэлгээтэй</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div id="page-contact" class="page">
+    <div class="contact-wrap">
+      <div class="contact-info-panel">
+        <h2>Холбоо<br>Барих</h2>
+        <p>Асуулт, захиалга, хувийн зөвлөгөө авахыг хүсвэл бидэнтэй холбоо барина уу.</p>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-detail-label">Хаяг</div>
+            <div class="contact-detail-text">Сүхбаатар дүүрэг, 1-р хороо,<br>Улаанбаатар хот</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-detail-label">Утас</div>
+            <div class="contact-detail-text">+976 9911-2233</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-detail-label">И-мэйл</div>
+            <div class="contact-detail-text">info@erdene-fashion.mn</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-detail-label">Ажлын цаг</div>
+            <div class="contact-detail-text">Даваа–Баасан: 09:00–18:00<br>Бямба: 10:00–16:00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-panel">
+        <h2>Санал Хүсэлт Илгээх</h2>
+        <div class="form-row">
+          <label>Таны нэр</label>
+          <input type="text" id="f-name" placeholder="Нэрээ бичнэ үү" />
+        </div>
+        <div class="form-row">
+          <label>И-мэйл хаяг</label>
+          <input type="email" id="f-email" placeholder="example@mail.com" />
+        </div>
+        <div class="form-row">
+          <label>Сэдэв</label>
+          <select id="f-topic">
+            <option value="">Сонгоно уу...</option>
+            <option>Бүтээгдэхүүний мэдээлэл</option>
+            <option>Захиалга өгөх</option>
+            <option>Хувийн зохион байгуулалт</option>
+            <option>Бусад</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Санал хүсэлт</label>
+          <textarea id="f-msg" placeholder="Таны мэдэгдэл..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%" onclick="submitForm()">Илгээх</button>
+        <div class="success-msg" id="success-msg">
+          ✓ Таны мэдэгдлийг хүлээн авлаа! Бид 24 цагийн дотор хариу илгээх болно.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2024 <span class="footer-gold">Эрдэнэ</span> — Монгол Хувцасны Брэнд. Бүх эрх хуулиар хамгаалагдсан.</p>
+  </div>
+
+  <script>
+    function showPage(id, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
+      document.getElementById('page-' + id).classList.add('visible');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function submitForm() {
+      var name = document.getElementById('f-name').value.trim();
+      var email = document.getElementById('f-email').value.trim();
+      var msg = document.getElementById('f-msg').value.trim();
+      if (!name || !email || !msg) {
+        alert('Нэр, и-мэйл болон мэдэгдлийг бөглөнө үү.');
+        return;
+      }
+      document.getElementById('success-msg').style.display = 'block';
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-msg').value = '';
+      document.getElementById('f-topic').value = '';
+    }
+  </script>
+</body>
+</html>

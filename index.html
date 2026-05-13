@@ -81,6 +81,12 @@
       aspect-ratio: 3/4; background: #e8e2d9;
       display: flex; align-items: center; justify-content: center;
       font-size: 48px; margin-bottom: 12px; position: relative;
+      overflow: hidden;
+    }
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .product-badge {
       position: absolute; top: 10px; left: 10px;
@@ -193,20 +199,17 @@
       </div>
       <div class="product-grid">
         <div class="product-card" onclick="showPage('info', document.querySelectorAll('.nav-btn')[1])">
-        <div class="product-img">
-    <img src="deel1.jpg" alt="Дээл" style="width:100%; height:100%; object-fit:cover;">
-    <span class="product-badge">Шинэ</span>
-</div>
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&h=500&fit=crop" alt="Дээл — Нэхмэл"><span class="product-badge">Шинэ</span></div>
           <div class="product-name">Дээл — Нэхмэл</div>
           <div class="product-price">₮ 185,000</div>
         </div>
         <div class="product-card" onclick="showPage('info', document.querySelectorAll('.nav-btn')[1])">
-          <div class="product-img">👘<span class="product-badge">Онцлох</span></div>
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1595777707802-9b97e07f1e3d?w=400&h=500&fit=crop" alt="Торгон Дээл"><span class="product-badge">Онцлох</span></div>
           <div class="product-name">Торгон Дээл</div>
           <div class="product-price">₮ 290,000</div>
         </div>
         <div class="product-card" onclick="showPage('info', document.querySelectorAll('.nav-btn')[1])">
-          <div class="product-img">🧥</div>
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1539533057440-7bf6b1c5efee?w=400&h=500&fit=crop" alt="Ноосон Пальто"></div>
           <div class="product-name">Ноосон Пальто</div>
           <div class="product-price">₮ 240,000</div>
         </div>
@@ -311,7 +314,7 @@
       <div class="contact-form-panel">
         <h2>Санал Хүсэлт Илгээх</h2>
         <div class="form-row">
-          <label>Таны нэр</label>
+          <label>Тан�� нэр</label>
           <input type="text" id="f-name" placeholder="Нэрээ бичнэ үү" />
         </div>
         <div class="form-row">
